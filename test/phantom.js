@@ -45,18 +45,18 @@ describe('phantom driver', function() {
     var crawler = Crawler()
       .driver(phantom(runner));
 
-    crawler('http://mat.io', function(err, ctx) {
+    crawler('https://github.com/search?q=ivawzh&type=Users&utf8=%E2%9C%93', function(err, ctx) {
       if (err) return done(err);
       var $ = cheerio.load(ctx.body);
       var title = $('title').text();
-      assert.equal('Lapwing Labs', title);
+      assert.equal('ivawzh (Ivan Wang) · GitHub', title);
       done();
     })
 
     function runner(ctx, nightmare) {
       return nightmare
         .goto(ctx.url)
-        .click('.Header-logo-item+ .Header-list-item a')
+        .click('div#user_search_results div.user-list div.user-list-item div.user-list-info a em')
         .wait()
     }
   })
