@@ -8,6 +8,10 @@
     "type": "git",
     "url": "git://github.com/lapwinglabs/x-ray-phantom.git"
   },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec --timeout 30000 test",
+    "test-watch": "./node_modules/.bin/mocha --reporter spec --timeout 30000 --watch test"
+  },
   "dependencies": {
     "debug": "^2.1.1",
     "nightmare": "^1.7.0",
