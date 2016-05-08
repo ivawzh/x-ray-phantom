@@ -6,21 +6,23 @@ var Crawler = require('x-ray-crawler')
 var cheerio = require('cheerio')
 var join = require('path').join
 var assert = require('assert')
-var phantom = require('../')
+var electron = require('../')
 var fs = require('fs')
 
 /**
  * Tests
  */
 
-describe('phantom driver', function() {
+describe('electron driver', function() {
 
-  it('should have sensible defaults', function(done) {
+  it.only('should have sensible defaults', function(done) {
     var crawler = Crawler()
-      .driver(phantom())
+      .driver(electron({showDev:false}))
 
     crawler('http://google.com', function(err, ctx) {
       if (err) return done(err)
+      console.log('ctx: ')
+      console.log(ctx)
       var $ = cheerio.load(ctx.body)
       var title = $('title').text()
       assert.equal('Google', title)
@@ -30,7 +32,7 @@ describe('phantom driver', function() {
 
   it('should work with client-side pages', function(done) {
     var crawler = Crawler()
-      .driver(phantom())
+      .driver(electron())
 
     crawler('https://exchange.coinbase.com/trade', function(err, ctx) {
       if (err) return done(err)
@@ -43,7 +45,7 @@ describe('phantom driver', function() {
 
   it('should support custom functions', function(done) {
     var crawler = Crawler()
-      .driver(phantom(runner))
+      .driver(electron(runner))
 
     crawler('https://github.com/search?q=ivawzh&type=Users&utf8=%E2%9C%93', function(err, ctx) {
       if (err) return done(err)
